@@ -19,10 +19,13 @@ from sklearn.neighbors import NearestNeighbors as kNN
 # base work for question 3
 fraud = pd.read_csv('Fraud.csv', delimiter=',')
 
+
 def answerPrint():
     print("The data FRAUD.csv contains the results of fraud investigations of 5,960 cases.  The binary variable FRAUD indicates the result of a fraud investigation: 1 = Fraud, 0 = Not Fraud.  The other quantitative variables contain information about the cases. We will train the Nearest Neighbors algorithm to predict the likelihood of fraud. ")
 
 # work for question 3A
+
+
 def twoA():
     fraud_count = fraud[fraud['FRAUD'] == 1].count()['FRAUD']
     total_count = fraud['FRAUD'].count()
@@ -33,6 +36,7 @@ def twoA():
     print("Question 3A Response: \n")
     print("This is the percentage of fraud: ")
     print("\n{0}%\n".format(fraudPercent))
+
 
 def twoB():
     print("\nPlaceholder")
