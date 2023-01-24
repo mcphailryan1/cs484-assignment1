@@ -17,7 +17,7 @@ gammaDataX = gammaData['x']
 
 
 def calculate(Y, delta):
-    # this function makes the calculations for oneB()
+    # this function makes the calculations for oneBC()
     # finding inital values using numpy methods
     maxY = np.max(Y)
     minY = np.min(Y)
@@ -55,7 +55,8 @@ def oneA():
     print(gammaDataDescribe)
 
 
-def oneB():
+def oneBC():
+    # work for problem 1B
     result = pd.DataFrame()
     dList = [0.1, 0.2, 0.25, 0.5, 1.0, 2.0,
              2.5, 5.0, 10.0, 20.0, 25.0, 50.0, 100.0]
@@ -76,7 +77,8 @@ def oneB():
         plt.title('Delta = ' + str(x))
         plt.ylabel("Number of Observations")
         plt.grid(axis='y')
-        #plt.show()
+        # IF YOU WANT TO SEE THE GRAPHS YOU NEED TO UNCOMMENT THE LINE BELOW
+        # plt.show()
 
     result = result.rename(columns={0: 'Delta', 1: 'C(Delta)', 2: 'Low Y', 3: 'Middle Y',
                            4: 'High Y', 5: 'New Bin', 6: 'Bin Observations', 7: 'Frequency'})
@@ -89,9 +91,47 @@ def oneB():
     ax1.set_title('Box Plot')
     ax1.boxplot(gammaDataX, labels=['x'])
     ax1.grid(linestyle='--', linewidth=1)
+    # IF YOU WANT TO SEE THE GRAPHS YOU NEED TO UNCOMMENT THE LINE BELOW
+    # plt.show()
+
+    # work for problem 1C
+    print("\nQuestion 1C: Draw the density estimator using your recommended bin width answer in (b).  You need to label the graph elements properly to receive full credit.\n")
+    print("Question 1C Answer: \n")
+    lowY = sortedResult['Low Y'][0]
+    y = sortedResult['Delta'][0]
+    newBin = sortedResult['New Bin'][0]
+    frequency = sortedResult['Frequency'][0]
+    N = len(gammaDataX)
+    depth = np.arange(newBin)
+    add_value = lowY + 0.5 * y
+    midBin = add_value + depth
+    a = []
+    for m in midBin:
+        u = (gammaDataX - m) / y
+        w = np.where(np.logical_and(u > -1/2, u <= 1/2), 1, 0)
+        sum_w = np.sum(w)
+        p_i = sum_w / (N * y)
+        a.append(p_i)
+    midPointVSDensity = pd.DataFrame(
+        {'Mid-Points': midBin,
+            'Estimated Density Function Values': a})
+    print("")
+    print(midPointVSDensity)
+    print("")
+    # Create Vertical Bar Chart
+    plt.bar(midBin, a, width=0.8, align='center',
+            label="Bin-width={0}".format(widthReccomendation))
+    plt.legend()
+    x_tick = np.arange(lowY, max(midBin) + y, 1)
+    y_tick = np.arange(0, max(a) + 0.025, 0.025)
+    plt.xticks(x_tick)
+    plt.yticks(y_tick)
+    plt.xlabel("Mid-points")
+    plt.ylabel("Estimated Density Function Values")
+    plt.title("Mid-points v/s Estimated Density Function Values")
     plt.show()
 
 
 answerPrint()
 oneA()
-oneB()
+oneBC()
