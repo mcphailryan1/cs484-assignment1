@@ -16,6 +16,10 @@ gammaData = pd.read_csv('Gamma4804.csv', delimiter=',', usecols=['x'])
 gammaDataX = gammaData['x']
 
 
+def answerPrint():
+    print("Queston 1: Please use the field x in the Gamma4804.csv file. ")
+
+
 def calculate(Y, delta):
     # this function makes the calculations for oneBC()
     # finding inital values using numpy methods
@@ -40,10 +44,6 @@ def calculate(Y, delta):
     stdFrequency = np.sum((Y - meanFrequency)**2) / num
     CDelta = ((2.0 * meanFrequency) - stdFrequency) / (delta * delta)
     return (num, middleY, lowY, CDelta, binObservations, frequency)
-
-
-def answerPrint():
-    print("Queston 1: Please use the field x in the Gamma4804.csv file. ")
 
 
 def oneA():
